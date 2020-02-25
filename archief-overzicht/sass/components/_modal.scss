@@ -1,0 +1,151 @@
+.modal {
+  &:focus {
+    outline: none;
+  }
+
+  @extend .z-depth-5;
+
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: #fafafa;
+  padding: 0;
+  max-height: 70%;
+  width: 55%;
+  margin: auto;
+  overflow-y: auto;
+
+  border-radius: 2px;
+  will-change: top, opacity;
+
+  @media #{$medium-and-down} {
+   width: 80%;
+  }
+
+  h1,h2,h3,h4 {
+    margin-top: 0;
+  }
+
+  .modal-content {
+    padding: 24px;
+  }
+  .modal-close {
+    cursor: pointer;
+  }
+
+  .modal-footer {
+    border-radius: 0 0 2px 2px;
+    background-color: #fafafa;
+    padding: 4px 6px;
+    height: 56px;
+    width: 100%;
+    text-align: right;
+
+    .btn, .btn-flat {
+      margin: 6px 0;
+    }
+  }
+}
+.modal-overlay {
+  position: fixed;
+  z-index: 999;
+  top: -25%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 125%;
+  width: 100%;
+  background: #000;
+  display: none;
+
+  will-change: opacity;
+}
+
+// Modal with fixed action footer
+.modal.modal-fixed-footer {
+  padding: 0;
+  height: 70%;
+
+  .modal-content {
+    position: absolute;
+    height: calc(100% - 56px);
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .modal-footer {
+    border-top: 1px solid rgba(0,0,0,.1);
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+// Modal Bottom Sheet Style
+.modal.bottom-sheet {
+  top: auto;
+  bottom: -100%;
+  margin: 0;
+  width: 100%;
+  max-height: 45%;
+  border-radius: 0;
+  will-change: bottom, opacity;
+}
+
+.filterModalHeader {
+  text-align: center;
+  margin-top: 10px !important;
+  width: 100%;
+}
+
+#filterModal {
+  padding: 10px !important;
+  display: flex !important;
+  flex-wrap: wrap;
+  height: 100% !important;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.modal-select {
+  width: 46%;
+  margin-left:2%;
+  margin-right:2%;
+  margin-bottom: 10px;
+}
+
+.modal-date {
+  width: 46% !important;
+  margin-left:2% !important;
+  margin-right:2% !important;
+  margin-bottom: 10px !important;
+}
+
+.select-dropdown {
+  display: none;
+}
+
+#logboekTable {
+  margin-top: 20px;
+}
+
+.datepicker-modal {
+  width: 100% !important;
+}
+
+@media only screen and (max-width : #{$small-screen}) {
+  .modal-select {
+    width: 96%;
+    margin-left:2%;
+    margin-right:2%;
+    margin-bottom: 10px;
+  }
+
+  .modal-date {
+    width: 96% !important;
+    margin-left:2% !important;
+    margin-right:2% !important;
+    margin-bottom: 10px !important;
+  }
+}

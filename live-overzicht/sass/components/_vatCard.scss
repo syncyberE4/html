@@ -1,0 +1,77 @@
+.vatCard-container {
+    width: 100%;
+    padding: 10px;
+    grid-area: auto / auto / span 4 / span 1;
+    height: 100%;
+}
+
+.vatCard {
+    height: 100%;
+    background-color: color("blue", "lighten-3");
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px #575757;
+}
+
+.vatCard-text {
+    text-align: center;
+    padding:0;
+    margin:0;
+    color: color("blue", "darken-1");
+}
+
+.activeVatCard:hover {
+    cursor: pointer;
+}
+
+.vatLabel {
+    font-size: 2rem;
+    margin: 0;
+    text-align: center;
+}
+
+.events-div {
+    margin: 0;
+}
+
+.event {
+    margin: 5px;
+    color: color("blue", "lighten-3");
+    text-align: center;
+    background-color: color("blue", "lighten-1");
+    border-radius: 5px;
+}
+
+.niet-bevestigt {
+    background-color: red;
+}
+
+@media only screen and (max-width : #{$small-screen}) {
+    .vatCard-container {
+        grid-area: auto / auto / span 4 / span 4;
+    }
+
+    .vatCard-actief {
+        grid-area: auto / auto / span 8 / span 4;
+    }
+}
+
+@media only screen and (min-width : #{$small-screen-up}) {
+    .vatCard-container {
+        grid-area: auto / auto / span 4 / span 2;
+    }
+
+    .vatCard-actief {
+        grid-area: auto / auto / span 8 / span 2;
+    }
+}
+
+@media only screen and (min-width : #{$medium-screen-up}) {
+    .vatCard-container {
+        grid-area: auto / auto / span 4 / span 1;
+    }
+
+    .vatCard-actief {
+        grid-area: auto / auto / span 8 / span 1;
+    }
+}

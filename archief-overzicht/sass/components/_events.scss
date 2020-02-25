@@ -1,0 +1,43 @@
+.events-container {
+    padding: 10px;
+    grid-area: auto / auto / span 7 / span 1;
+}
+
+.events {
+    height: 100%;
+    background-color: color("blue", "lighten-2");
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px #575757;
+    overflow: scroll;
+}
+
+.event {
+    margin: 5px;
+    color: color("blue", "lighten-3");
+    text-align: center;
+    background-color: color("blue", "lighten-1");
+    border-radius: 5px;
+}
+
+.niet-bevestigt {
+    background-color: red;
+}
+
+@media only screen and (max-width : #{$small-screen}) {
+    .events-container {
+        grid-area: auto / auto / span 7 / span 4;
+    }
+}
+
+@media only screen and (min-width : #{$small-screen-up}) {
+    .events-container {
+        grid-area: auto / auto / span 7 / span 2;
+    }
+}
+
+@media only screen and (min-width : #{$medium-screen-up}) {
+    .events-container {
+        grid-area: auto / auto / span 7 / span 1;
+    }
+}
