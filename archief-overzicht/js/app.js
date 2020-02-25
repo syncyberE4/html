@@ -2,7 +2,7 @@ var vatenData = {}
 var reloadVatenInterval = ""
 var reloadLogboekInterval = ""
 var logboekData = {}
-var apiUrl = "http://192.168.137.4:8050/api/"
+var apiUrl = "http://192.168.137.4:8051/api/"
 
 window.addEventListener("load", function () {
     console.log("app ready");
