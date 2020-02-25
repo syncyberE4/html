@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');  
-$servername = "192.168.137.10";
+$servername = "192.168.137.4";
 $username = "gregory";
 $password = "badmuts";
 $dbname = "syncyber";

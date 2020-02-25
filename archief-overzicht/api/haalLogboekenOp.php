@@ -1,12 +1,12 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 header('Access-Control-Allow-Origin: *');  
-$servername = "192.168.137.10";
+$servername = "192.168.137.4";
 $username = "gregory";
 $password = "badmuts";
-$dbname = "syncyber"; 
+$dbname = "syncyber";
 // $servername = "ID248955_syncyber.db.webhosting.be";
 // $username = "ID248955_syncyber";
 // $password = "R1234-56";

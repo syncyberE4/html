@@ -2,18 +2,24 @@ var vatenData = {}
 var reloadVatenInterval = ""
 var reloadLogboekInterval = ""
 var logboekData = {}
-var apiUrl = "http://192.168.0.10:8051/api/"
+var apiUrl = "http://192.168.137.4:8051/live-overzicht/"
 
 window.addEventListener("load", function () {
     console.log("app ready");
     init()
 })
 
+// this function gets called as soon as the application is ready to use
+// it gets the container and passes it to the function that will show a page.
 function init() {
     appContainer = document.getElementById("appContainer")
     showFilterModal(appContainer, false)
 }
 
+// this opens the filter modal where the user can select filters and open a archived logbook
+// appContainer parameter (HTML object) (mandetory): the container where all the html items will be placed
+// dismisable parameter (boolean) (mandetory): if false than the user wont be able to close the modal without selecting a logbook
+// if true than the user will be able to close the modal by clicking besides the modal
 async function showFilterModal(appContainer, dismisable) {
     try {
         appContainer.appendChild(createModal("filterModal"))
@@ -63,6 +69,8 @@ async function showFilterModal(appContainer, dismisable) {
 
 }
 
+// this gets the filter information and shows a table of all the logbooks that matches the filters.
+// filterModal parameter (HTML object) (mandetory): the modal where the table will be placed
 async function listLogboeken(filterModal) {
     try {
         var params = new FormData;
@@ -106,6 +114,9 @@ async function listLogboeken(filterModal) {
     }
 }
 
+// this function shows the detailed view of the given logbook
+// appContainer parameter (HTML object) (mandetory): the container where the data will be shown
+// logboekId (int) (mandetory): the id of the requested logbook that the user wants to see
 async function showLogboek(appContainer, logboekId) {
     try {
         appContainer.innerHTML = createHeader("Logboek", "header")
@@ -169,6 +180,9 @@ async function showLogboek(appContainer, logboekId) {
     }
 }
 
+// this function is used to retrieve data from the server. 
+// url parameter (string) (mandetory): is the url where the api file is situated
+// params parameter (FormData) (optional): are the parameters you want to pass to the server
 function loadData(url, params = null) {
     return new Promise((resolve, reject) => {
         var xmlhttp = new XMLHttpRequest()
@@ -193,6 +207,9 @@ function loadData(url, params = null) {
     })
 }
 
+// this function is used to send data to the server and to retrieve a succes or an error of the action from the server
+// url parameter (string) (mandetory): is the url where the api file is situated
+// params parameter (FormData) (mandetory): are the parameters you want to pass to the server
 function sendData(url, params = null) {
     return new Promise((resolve, reject) => {
         if (params != null) {
@@ -214,10 +231,14 @@ function sendData(url, params = null) {
     })
 }
 
+// function to remove an element and all it's children from the application
+// element parameter (string) (mandetory): the id of the element you want to delete
 function removeEl(element) {
     element.parentNode.removeChild(element);
 }
 
+// function to extract the current logbook his data as a CSV file (, seperated)
+// logboek parameter (int) (mendatory): contains the id of the logbook where the user wants the data from
 function CreateCSV(logboek) {
     console.log(logboek);
     var header = [["sensor", "meting tijdstip", "meetwaarde", "eenheid"]]

@@ -2,19 +2,24 @@ var vatenData = {}
 var reloadVatenInterval = ""
 var reloadLogboekInterval = ""
 var logboekData = {}
-var apiUrl = "http://192.168.137.10:8050/api/"
+var apiUrl = "http://192.168.137.4:8050/live-overzicht/"
 
+// waits for the app to be ready to use and then show the main view
 window.addEventListener("load", function () {
     console.log("app ready");
     M.AutoInit();
     toonVatenScherm()
 })
 
+// this function gets the appcontainer and passes it to the show vaten function
 function toonVatenScherm() {
     appContainer = document.getElementById("appContainer")
     showVaten(appContainer)
 }
 
+// this functio gets the appContainer empties it
+// adds a header with text "Overzicht vaten" and a preloader to the container
+// then it passes the container to the function showLogbook
 function toonLogboekScherm() {
     appContainer = document.getElementById("appContainer")
     appContainer.innerHTML = createHeader("Overzicht vaten", "header")
@@ -22,6 +27,8 @@ function toonLogboekScherm() {
     showLogboek(appContainer)
 }
 
+// retrieves all the vats from the server and shows it in the overview screen
+// appContainer parameter (HTML object) (mandetory): the container where all the elements will be shown
 async function showVaten(appContainer) {
     try {
         appContainer.innerHTML = createHeader("Overzicht vaten", "header")
@@ -53,6 +60,8 @@ async function showVaten(appContainer) {
     }
 }
 
+// this function reloads and updates the data shown on the overview screen
+// appContainer parameter (HTML object) (mandetory): the container where all the overview data is shown
 async function reloadVaten(appContainer) {
     try {
         var elems = document.querySelectorAll('.tooltipped');
@@ -80,6 +89,9 @@ async function reloadVaten(appContainer) {
     }
 }
 
+// this function loads and shows all the data of a given logbook
+// appContainer parameter (HTML object) (mandetory): the container wher all the elements will be shown
+// logboekId parameter (int) (mandetory): the id of the requested logbook
 async function showLogboek(appContainer, logboekId) {
     try {
         var elems = document.querySelectorAll('.tooltipped');
@@ -158,7 +170,7 @@ async function showLogboek(appContainer, logboekId) {
                 params.append("logboekId", logboekId)
                 const response = await sendData(apiUrl + "stopVatEnEindigLogboek.php", params);
                 showVaten(appContainer)
-                stopFermentatie(appContainer, vatId, logboekId)
+                stopFermentatie(vatId, logboekId)
             } catch (err) {
                 console.error(err);
             }
@@ -173,6 +185,8 @@ async function showLogboek(appContainer, logboekId) {
 }
 
 // async function that update the data that is shown on the logboek page.
+// appContainer parameter (HTML object) (mandetory): the container where all the updateble data is situated
+// logboekId parameter (int) (mandetory): the id of the logbook which data has to be retrieved
 async function reloadLogboek(appContainer, logboekId) {
     var elems = document.querySelectorAll('.tooltipped');
     var instances = M.Tooltip.init(elems);
@@ -229,9 +243,9 @@ async function reloadLogboek(appContainer, logboekId) {
     })
 }
 
-// function to load data from the server
-// the url parameter is manadatory and refers to where the api file is situated
-// the params parameter is manadatory and refers to where the api file is situated
+// this function is used to retrieve data from the server. 
+// url parameter (string) (mandetory): is the url where the api file is situated
+// params parameter (FormData) (optional): are the parameters you want to pass to the server
 function loadData(url, params = null) {
     return new Promise((resolve, reject) => {
         var xmlhttp = new XMLHttpRequest()
@@ -256,6 +270,9 @@ function loadData(url, params = null) {
     })
 }
 
+// this function is used to send data to the server and to retrieve a succes or an error of the action from the server
+// url parameter (string) (mandetory): is the url where the api file is situated
+// params parameter (FormData) (mandetory): are the parameters you want to pass to the server
 function sendData(url, params = null) {
     return new Promise((resolve, reject) => {
         if (params != null) {
@@ -277,11 +294,16 @@ function sendData(url, params = null) {
     })
 }
 
+// function to remove an element and all it's children from the application
+// element parameter (string) (mandetory): the id of the element you want to delete
 function removeEl(element) {
     element.parentNode.removeChild(element);
 }
 
-async function stopFermentatie(appContainer, vatId, logboekId) {
+// the function to stop and archive a active fermentation process
+// vatId parameter (int) (mandetory): the id of the vat that has to be shut down
+// logboekId parameter (int) (mandetory): the id of the logbook that has to be archived
+async function stopFermentatie(vatId, logboekId) {
     try {
         clearInterval(reloadLogboekInterval);
         var params = new FormData;
@@ -295,6 +317,12 @@ async function stopFermentatie(appContainer, vatId, logboekId) {
     }
 }
 
+// this opens the modal where the user can put his manual data
+// sensoren parameter (array) (mandetory): all the sensors that are attached to this process
+// logboekId parameter (int) (mandetory): the id of the logbook where the added data has to be attached to
+// modalContainer parameter (HTML object) (mandetory): the modal that has to be opened
+// modalContent parameter (HTML object) (mandetory): the modal where all the input fields have to be added at
+// appContainer parameter (HTML object) (mandetory): the container where all the data is shown in
 function openMetingFormulier(sensoren, logboekId, modalContainer, modalContent, appContainer) {
     modalContent.innerHTML = ""
     modalContent.append(createHMetingFormulier("metingFormulier", sensoren))
@@ -304,6 +332,11 @@ function openMetingFormulier(sensoren, logboekId, modalContainer, modalContent, 
 
 }
 
+// this function read all the inputs and and prepares them to be send to the server
+// sensoren parameter (array) (mandetory): all the sensors that are attached to the logbook and vat
+// logbookId parameter (int) (mandetory): the id of the logbook where the data has to be added to
+// modal parameter (HTML object) (mandetory): the modal that has to be closed
+// appContainer parameter (HTML object) (mandetory): the container wher all the comonent in exist 
 function verzendHandmeting(sensoren, logboekId, modal, appContainer) {
     sensorenData = {}
     sensoren.forEach(sensor => {
@@ -316,6 +349,10 @@ function verzendHandmeting(sensoren, logboekId, modal, appContainer) {
     verstuurHandmetingData(params, appContainer, logboekId)
 }
 
+// this function sends the manual data to the server
+// params parameter (FormData) (mandetory): all the data that has to be send to the server
+// appContainer parameter (HTML object) (mandetory): the container wher all the component exist in
+// logboekId parameter (int) (mandetory): the id of the logbook which you want to show after the data is added
 async function verstuurHandmetingData(params, appContainer, logboekId) {
     try {
         const response = await sendData(apiUrl + "insertHandmeting.php", params)
@@ -328,10 +365,13 @@ async function verstuurHandmetingData(params, appContainer, logboekId) {
     }
 }
 
+// initializes all the materialize components
 function initMaterialize() {
     M.AutoInit()
 }
 
+// function to extract the current logbook his data as a CSV file (, seperated)
+// logboek parameter (int) (mendatory): contains the id of the logbook where the user wants the data from
 function CreateCSV(logboek) {
     console.log(logboek);
     var header = [["sensor", "meting tijdstip", "meetwaarde", "eenheid"]]
