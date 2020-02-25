@@ -4,14 +4,7 @@
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 header('Access-Control-Allow-Origin: *');  
-$servername = "192.168.137.4";
-$username = "gregory";
-$password = "badmuts";
-$dbname = "syncyber";
-// $servername = "ID248955_syncyber.db.webhosting.be";
-// $username = "ID248955_syncyber";
-// $password = "R1234-56";
-// $dbname = "ID248955_syncyber";
+include 'config.php';
 
 $response = array(
     "status" => null,
